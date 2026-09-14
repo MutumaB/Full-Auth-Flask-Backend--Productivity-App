@@ -9,10 +9,10 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
-# Cross-Origin Resource Sharing configuration for frontend connections
+# Enable Cross-Origin Resource Sharing for frontend client applications
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
-# Smart Database Router (Handles Render PostgreSQL format dynamically or falls back to local SQLite)
+# Smart Production Database Router (Handles modern Render/Heroku 'postgres://' mapping syntax)
 database_url = os.environ.get('DATABASE_URL', 'sqlite:///productivity.db')
 if database_url.startswith("postgres://"):
     database_url = database_url.replace("postgres://", "postgresql://", 1)

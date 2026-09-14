@@ -8,11 +8,12 @@ class User(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     _password_hash = db.Column(db.String(128), nullable=False)
 
+    # One User can possess multiple owned resource records
     tasks = db.relationship('Task', backref='user', lazy=True, cascade="all, delete-orphan")
 
     @property
     def password_hash(self):
-        raise AttributeError('Password hash is not readable.')
+        raise AttributeError('Password hash layout cannot be directly read.')
 
     @password_hash.setter
     def password_hash(self, password):
@@ -32,7 +33,7 @@ class Task(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 
-# Validation & Serialization Schemas
+# Request Validation and Serialization Controllers
 class UserSchema(Schema):
     id = fields.Int(dump_only=True)
     username = fields.Str(required=True, validate=validate.Length(min=3, max=50))

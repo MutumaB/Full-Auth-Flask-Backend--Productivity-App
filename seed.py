@@ -6,11 +6,11 @@ import random
 fake = Faker()
 
 with app.app_context():
-    print("Dropping existing tables...")
+    print("Dropping existing mock database tables...")
     db.drop_all()
     db.create_all()
 
-    print("Generating mock users and paginated tasks...")
+    print("Generating development database state profiles...")
     users = []
     for _ in range(5):
         user = User(username=fake.user_name())
@@ -20,7 +20,7 @@ with app.app_context():
     db.session.commit()
 
     for user in users:
-        for _ in range(15):  # High count guarantees multi-page testing data
+        for _ in range(15):  # Forces enough content rows to split across pages
             task = Task(
                 title=fake.catch_phrase(),
                 description=fake.text(max_nb_chars=120),
@@ -30,4 +30,4 @@ with app.app_context():
             db.session.add(task)
             
     db.session.commit()
-    print("Database environment seeding complete!")
+    print("Mock database generation seeding complete!")

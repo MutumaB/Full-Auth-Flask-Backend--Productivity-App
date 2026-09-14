@@ -2,7 +2,7 @@ from config import app, api
 from routes.auth import SignUp, Login, CheckSession
 from routes.tasks import TaskListResource, TaskResource
 
-# Map Endpoints to Resources
+# Endpoint Mapping Registration
 api.add_resource(SignUp, '/signup')
 api.add_resource(Login, '/login')
 api.add_resource(CheckSession, '/check_session')

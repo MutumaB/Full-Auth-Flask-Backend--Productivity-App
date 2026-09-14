@@ -13,6 +13,7 @@ class TaskListResource(Resource):
         page = request.args.get('page', 1, type=int)
         per_page = request.args.get('per_page', 10, type=int)
         
+        # Access protection constraints isolating resource queries strictly to the token owner
         pagination = Task.query.filter_by(user_id=current_user_id).paginate(
             page=page, per_page=per_page, error_out=False
         )
